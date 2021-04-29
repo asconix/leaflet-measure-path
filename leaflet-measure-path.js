@@ -298,7 +298,7 @@
                 for (var i = 1, len = latLngs.length; (isPolygon && i <= len) || i < len; i++) {
                     ll1 = latLngs[i - 1];
                     ll2 = latLngs[i % len];
-                    dist = ll1.distanceTo(ll2);
+                    dist = this._map.distance(ll1, ll2);
                     totalDist += dist;
 
                     p1 = this._map.latLngToLayerPoint(ll1);
