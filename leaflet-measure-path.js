@@ -129,38 +129,21 @@
     // This function is distributed under a separate license,
     // see LICENSE.md.
     var ringArea = function ringArea(coords) {
-        var rad = function rad(_) {
-            return _ * Math.PI / 180;
-        };
-        var p1, p2, p3, lowerIndex, middleIndex, upperIndex,
-        area = 0,
-        coordsLength = coords.length;
+      let area = 0;
 
-        if (coordsLength > 2) {
-            for (var i = 0; i < coordsLength; i++) {
-                if (i === coordsLength - 2) {// i = N-2
-                    lowerIndex = coordsLength - 2;
-                    middleIndex = coordsLength -1;
-                    upperIndex = 0;
-                } else if (i === coordsLength - 1) {// i = N-1
-                    lowerIndex = coordsLength - 1;
-                    middleIndex = 0;
-                    upperIndex = 1;
-                } else { // i = 0 to N-3
-                    lowerIndex = i;
-                    middleIndex = i+1;
-                    upperIndex = i+2;
-                }
-                p1 = coords[lowerIndex];
-                p2 = coords[middleIndex];
-                p3 = coords[upperIndex];
-                area += ( rad(p3.lng) - rad(p1.lng) ) * Math.sin( rad(p2.lat));
-            }
-
-            area = area * RADIUS * RADIUS / 2;
+      if (coords.length > 2) {
+        for (let i = 0; i < coords.length; i++) {
+          let z = i + 1;
+          if (i === coords.length - 1) {
+            z = 0;
+          }
+          area += (coords[i].lat * coords[z].lng) - (coords[i].lng * coords[z].lat)
         }
+      }
 
-        return Math.abs(area);
+      area = area / 2;
+
+      return Math.abs(area);
     };
     /**
      * Handles the init hook for polylines and circles.
